@@ -1,14 +1,59 @@
 package clase.dto;
 
+import java.util.ArrayList;
+
 public class CuentaCorriente {
 
-	String dni;
-	String nombreTitular;
-	double saldo;
+	// Atributos
 
+	private String dni;
+	private String nombreTitular;
+	private double saldo;
+
+	// Getters y Setters
+	// Utilizados para que clases externas tengan acceso a los atributos.
+
+	// get para obtener el atributo
+	public String getDni() {
+		return dni;
+	}
+
+	// set para modificar el atributo
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public String getNombreTitular() {
+		return nombreTitular;
+	}
+
+	public void setNombreTitular(String nombreTitular) {
+		this.nombreTitular = nombreTitular;
+	}
+
+	public double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
+
+	// Constructores
+
+	// Este constructor se podría utilizar por defecto.
 	public CuentaCorriente() {
 		super();
 	}
+
+	public CuentaCorriente(String dni, String nombreTitular) {
+		super();
+		this.dni = dni;
+		this.nombreTitular = nombreTitular;
+		this.saldo = 0.0;
+	}
+
+	// Métodos
 
 	public void crearCuenta(String dni, String nombreTitular) {
 		this.dni = dni;
@@ -17,31 +62,24 @@ public class CuentaCorriente {
 	}
 
 	public void mostrarInfo() {
-
-		if (nombreTitular != null && dni != null) {
-			System.out.println("Nombre: " + nombreTitular);
-			System.out.println("DNI: " + dni);
-			System.out.println("saldo: " + saldo);
-		}
+		System.out.println("Datos");
+		System.out.println("----------");
+		System.out.println("Nombre: " + nombreTitular);
+		System.out.println("DNI: " + dni);
+		System.out.println("Saldo: " + saldo + "$");
 	}
 
 	public void ingresarDinero(double ingreso) {
-		if (nombreTitular != null && dni != null) {
-			System.out.println("Se ingresarán " + ingreso + "$.");
-			saldo = saldo + ingreso;
-		}
+		saldo = saldo + ingreso;
 	}
 
-	public void sacarDinero(double retirada) {
-		if (nombreTitular != null && dni != null) {
-			if (saldo > retirada) {
-				System.out.println("Se retirarán " + retirada + "$.");
-				saldo = saldo - retirada;
-			} else
-				System.out.println("Tu saldo actual es " + saldo + "$. No tienes suficientes fondos para retirar "
-						+ retirada + "$.");
-		}
+	public void retirarDinero(double retirada) {
+		if (saldo >= retirada)
+			saldo = saldo - retirada;
+	}
 
+	public ArrayList<CuentaCorriente> mostrarCuentasUsuario(String dni) {
+		return null;
 	}
 
 }
