@@ -1,33 +1,47 @@
 package clase.dto;
 
 public class CuentaCorriente {
-	
+
 	String dni;
 	String nombreTitular;
-	double saldoCuenta;
-	
-	public CuentaCorriente(String dni, String nombreTitular, double saldo) {
+	double saldo;
+
+	public CuentaCorriente() {
 		super();
+	}
+
+	public void crearCuenta(String dni, String nombreTitular) {
 		this.dni = dni;
 		this.nombreTitular = nombreTitular;
-		this.saldoCuenta = saldo;
+		this.saldo = 0.0;
 	}
-	
-	public void crearCuenta(String dniCuenta, String nombreTitularCuenta) {
-		new CuentaCorriente(dniCuenta, nombreTitularCuenta, 0.0);
+
+	public void mostrarInfo() {
+
+		if (nombreTitular != null && dni != null) {
+			System.out.println("Nombre: " + nombreTitular);
+			System.out.println("DNI: " + dni);
+			System.out.println("saldo: " + saldo);
+		}
 	}
-	public double ingresarDinero(double saldo, double ingreso) {
-		System.out.println("Se ingresarán " + ingreso + "$.");
-		return saldo + ingreso;
+
+	public void ingresarDinero(double ingreso) {
+		if (nombreTitular != null && dni != null) {
+			System.out.println("Se ingresarán " + ingreso + "$.");
+			saldo = saldo + ingreso;
+		}
 	}
-	public void mostrarInfo(String nombreTitularCuenta, String dni, double saldoCuenta) {
-		System.out.println("Nombre: " + nombreTitularCuenta);
-		System.out.println("DNI: " + dni);
-		System.out.println("saldo: " + saldoCuenta);
-	}
-	public double sacarDinero(double retirada, double saldo) {
-		System.out.println("Se retirarán " + retirada + "$.");
-		return saldo - retirada;
+
+	public void sacarDinero(double retirada) {
+		if (nombreTitular != null && dni != null) {
+			if (saldo > retirada) {
+				System.out.println("Se retirarán " + retirada + "$.");
+				saldo = saldo - retirada;
+			} else
+				System.out.println("Tu saldo actual es " + saldo + "$. No tienes suficientes fondos para retirar "
+						+ retirada + "$.");
+		}
+
 	}
 
 }
