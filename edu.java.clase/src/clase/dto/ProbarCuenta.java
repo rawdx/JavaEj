@@ -1,5 +1,6 @@
 package clase.dto;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ProbarCuenta {
@@ -8,16 +9,11 @@ public class ProbarCuenta {
 
 		CuentaCorriente miCuenta = new CuentaCorriente();
 		Scanner sc = new Scanner(System.in);
+		ArrayList<CuentaCorriente> listaCuentas = new ArrayList<>();	
 		int opcion;
 
 		do {
-			System.out.println("\n--- Cuenta Bancaria ---");
-			System.out.println("1. Crear cuenta");
-			System.out.println("2. Ingresar dinero");
-			System.out.println("3. Retirar dinero");
-			System.out.println("4. Mostrar información");
-			System.out.println("5. Salir");
-
+			mostrarMenu();
 			System.out.print("\nIntroduzca la operación que desea realizar: ");
 			opcion = sc.nextInt();
 
@@ -35,11 +31,13 @@ public class ProbarCuenta {
 				System.out.print("Introduzca su nombre:");
 				String nombre = sc.next();
 
-				miCuenta.crearCuenta(dni, nombre);
-				System.out.println("La cuenta se ha creado exitosamente.");
+				listaCuentas.add(miCuenta.crearCuenta(dni, nombre));
+				System.out.println("La cuenta se ha creado exitosamente: " + listaCuentas.get(listaCuentas.size()-1).toString());
 				break;
 
 			case 2:
+				listaCuentas = miCuenta.ingresoCuenta(listaCuentas);
+				/*
 				if (miCuenta.getDni() == null)
 					System.out.println("Para ingresar dinero debes crear una cuenta.");
 				else {
@@ -49,6 +47,7 @@ public class ProbarCuenta {
 					miCuenta.ingresarDinero(ingreso);
 					System.out.println("Se ingresarán " + ingreso + "$.");
 				}
+				*/
 				break;
 
 			case 3:
@@ -77,4 +76,13 @@ public class ProbarCuenta {
 		} while (opcion != 5);
 		sc.close();
 	}
+	static void mostrarMenu() {
+		System.out.println("\n--- Cuenta Bancaria ---");
+		System.out.println("1. Crear cuenta");
+		System.out.println("2. Ingresar dinero");
+		System.out.println("3. Retirar dinero");
+		System.out.println("4. Mostrar información");
+		System.out.println("5. Salir");
+	}
+
 }
