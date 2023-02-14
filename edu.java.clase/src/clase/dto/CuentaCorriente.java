@@ -62,9 +62,17 @@ public class CuentaCorriente {
 	
 	// Métodos
 
-	public CuentaCorriente crearCuenta(String dni, String nombreTitular) {
+	public CuentaCorriente crearCuenta() {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Introduzca su DNI:");
+		String dni = sc.next();
+
+		System.out.print("Introduzca su nombre:");
+		String nombreTitular = sc.next();
+		
 		//1 forma
-		CuentaCorriente cc = new CuentaCorriente(dni,nombreTitular);
+		//CuentaCorriente cc = new CuentaCorriente(dni,nombreTitular);
 		//2 forma
 		CuentaCorriente ccc = new CuentaCorriente();
 		ccc.setDni(dni);
@@ -73,49 +81,76 @@ public class CuentaCorriente {
 		return ccc;
 	}
 
-	public void mostrarInfo() {
-		System.out.println("Datos");
-		System.out.println("----------");
-		System.out.println("Nombre: " + nombreTitular);
-		System.out.println("DNI: " + dni);
-		System.out.println("Saldo: " + saldo + "$");
-	}
-
-	public void ingresarDinero(double ingreso) {
-		saldo = saldo + ingreso;
+	public void mostrarInfo(ArrayList<CuentaCorriente> listaCuentas) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Introduzca su DNI:");
+		String dni = sc.next();
+		boolean encontrado = false;
+		for (CuentaCorriente cuenta : listaCuentas) {
+			if (cuenta.getDni().equals(dni)) {
+				System.out.println(cuenta.toString());
+				encontrado = true;
+				break;
+			}
+		}
+		if(encontrado == false)
+			System.out.println("No existe cuenta para el dni indicado.");
 	}
 
 	public ArrayList<CuentaCorriente> ingresoCuenta(ArrayList<CuentaCorriente> listaCuentas) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Introduzca su DNI:");
 		String dni = sc.next();
-
+		boolean encontrado = false;
 		int cont = 0;
 		for (CuentaCorriente cuenta : listaCuentas) {
 			if (cuenta.getDni().equals(dni)) {
+				encontrado = true;
 				System.out.print("Introduzca la cantidad a ingresar: ");
 				double ingreso = sc.nextDouble();
 				double saldoActual = listaCuentas.get(cont).getSaldo();
 				double saldoNuevo = listaCuentas.get(cont).getSaldo() + ingreso;
 				listaCuentas.get(cont).setSaldo(saldoNuevo);
-				System.out.println("Saldo anterior: " + saldoActual + "Saldo nuevo" + saldoNuevo);
+				System.out.println("Saldo anterior: " + saldoActual + "\nSaldo nuevo: " + saldoNuevo);
 				break;
-			} else {
-				System.out.println("No existe cuenta para el dni indicado.");
 			}
 			cont++;
 		}
-		sc.close();
+		if(encontrado == false)
+			System.out.println("No existe cuenta para el dni indicado.");
+		
 		return listaCuentas;
 	}
 	
-	public void retirarDinero(double retirada) {
-		if (saldo >= retirada)
-			saldo = saldo - retirada;
-	}
-
-	public ArrayList<CuentaCorriente> mostrarCuentasUsuario(String dni) {
-		return null;
+	public ArrayList<CuentaCorriente> retiroCuenta(ArrayList<CuentaCorriente> listaCuentas) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Introduzca su DNI:");
+		String dni = sc.next();
+		boolean encontrado = false;
+		
+		int cont = 0;
+		for (CuentaCorriente cuenta : listaCuentas) {
+			if (cuenta.getDni().equals(dni)) {
+				encontrado = true;
+				System.out.print("Introduzca la cantidad a retirar: ");
+				double retirada = sc.nextDouble();
+				double saldoActual = listaCuentas.get(cont).getSaldo();
+				double saldoNuevo;
+				if(saldoActual >= retirada) {
+					saldoNuevo = saldoActual - retirada;
+					listaCuentas.get(cont).setSaldo(saldoNuevo);
+					System.out.println("Saldo anterior: " + saldoActual + " Saldo nuevo: " + saldoNuevo);
+				} else {
+					System.out.println("Tu saldo actual es " + saldoActual
+							+ "$. No tienes suficientes fondos para retirar " + retirada + "$.");
+				}
+				break;
+			}
+			cont++;
+		}
+		if(encontrado == false)
+			System.out.println("No existe cuenta para el dni indicado.");
+		return listaCuentas;
 	}
 
 }
