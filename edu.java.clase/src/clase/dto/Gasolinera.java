@@ -1,7 +1,6 @@
 package clase.dto;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Gasolinera {
 
@@ -13,7 +12,7 @@ public class Gasolinera {
 		
 		do {
 			mostrarMenu();
-			opcion = capturaOpcion();
+			opcion = miRepo.CapturaOpcion("\nIntroduce una opción", 1, 6);
 			
 			switch(opcion) {
 			case 1:
@@ -23,10 +22,16 @@ public class Gasolinera {
 				listaRepos.add(miRepo.RepostajeFactura());
 				break;
 			case 3:
-				miRepo.mostrarRepostajes(listaRepos);
+				miRepo.MostrarRepostajes(listaRepos);
+				break;
+			case 4:
+				listaRepos = miRepo.BorrarRepostaje(listaRepos);
+				break;
+			case 5:
+				listaRepos = miRepo.ModificarRepostaje(listaRepos);
 				break;
 			}
-		}while(opcion != 4);
+		}while(opcion != 6);
 	}
 	
 	static void mostrarMenu() {
@@ -34,20 +39,10 @@ public class Gasolinera {
 		System.out.println("1. Repostaje normal");
 		System.out.println("2. Repostaje factura");
 		System.out.println("3. Mostrar repostajes");
-		System.out.println("4. Salir");
+		System.out.println("4. Borrar repostaje");
+		System.out.println("5. Modificar repostaje");
+		System.out.println("6. Salir");
 	}
 	
-	static int capturaOpcion() {
-		Scanner sc = new Scanner(System.in);
-		System.out.print("\nIntroduce una opción:");
-		int opcion = sc.nextInt();
-		
-		while (opcion < 1 || opcion > 4) {
-			System.err.println("Error. No has introducido una opción válida.");
-			System.out.print("Vuelva a introducir una opción: ");
-			opcion = sc.nextInt();
-		}
-		return opcion;
-	}
 
 }
